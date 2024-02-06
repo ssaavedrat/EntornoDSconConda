@@ -114,3 +114,99 @@ conda env remove --name nombre_ambiente
 
 No se puede remover un ambiente virtual si está activo. Si el ambiente está activo, primero debe desactivarse (para volver al base).
 
+## Conda: Comandos Avanzados
+
+### Crear Ambiente Virtual con Versión de Python Específica
+
+Para crear un ambiente virtual con una versión específica de Python, escribimos en la terminal:
+
+```bash
+conda create --name py39 python=3.9 pandas=1.2
+```
+
+### Instalar Paquetes desde Canales Adicionales
+
+Ahora bien, imagina que quieres instalar un paquete que no está en la lista de conda. Puedes buscar canales adicionales desde www.anaconda.org.
+
+![Ejemplo de búsqueda de paquete "boltons"](image.png)
+
+En la imagen, he buscado el paquete "boltons" y he encontrado que está en el canal "conda-forge" para distintas plataformas. Para instalarlo, escribimos en la terminal:
+
+```bash
+conda install --channel conda-forge boltons
+```
+
+y listo, el paquete "boltons" se instalará en el ambiente virtual. para verificarlo, escribimos:
+
+```bash
+conda list
+```
+
+### Revisiones de Ambientes Virtuales
+
+Podemos revisar el estado de un ambiente virtual en un momento específico. Cada vez que se instala o actualiza un paquete, se crea una revisión del ambiente virtual.
+
+Para revisar las revisiones de un ambiente virtual, escribimos en la terminal:
+
+```bash
+conda list --revisions
+```
+
+La revisión detallará los paquetes instalados y las versiones de los mismos. Si queremos volver a una revisión específica, escribimos:
+
+```bash
+conda install --revision 0
+```
+
+La revisión 0 es la revisión inicial, es decir, el ambiente recién creado. Esto creará una nueva revisión con los paquetes de la revisión 0.
+
+### Exportar Ambientes Virtuales
+
+Para exportar un ambiente virtual, escribimos en la terminal
+
+* --no-builds: asegura que se exporte solo el nombre y la versión del paquete.
+* --from-history: solo incluirá los paquetes que fueron instalados por el usuario.
+
+```bash
+conda env export --no-builds --from-history --file environment.yml
+```
+
+### Importar Ambientes Virtuales
+
+Para importar un ambiente virtual, escribimos en la terminal:
+
+```bash
+conda env create --file environment.yml
+```
+
+## Acelerar la Creación de Ambientes Virtuales con Mamba
+
+Mamba es un gestor de paquetes y ambientes virtuales que acelera la creación de ambientes virtuales. Mamba es compatible con Conda, es decir, podemos usar los comandos de Conda con Mamba.
+
+Mamba es una reimplementación de Conda en C++, lo que lo hace más rápido que Conda. Para instalar Mamba, escribimos en la terminal:
+
+```bash
+conda install --channel conda-forge mamba
+```
+
+Para ver los comando de Mamba, escribimos en la terminal:
+
+```bash
+mamba --help
+```
+
+Podemos crear un ambiente virtual con Mamba desde un archivo `environment.yml` con el comando:
+
+```bash
+mamba env create --file environment.yml
+```
+
+## Bonus: Divide y Vencerás
+
+Divide y vencerás es una técnica de diseño de algoritmos que consiste en resolver un problema dividiéndolo en subproblemas más simples de resolver. La idea es que si los subproblemas son lo suficientemente pequeños, se resuelven de manera sencilla. Una vez resueltos los subproblemas, se combinan para resolver el problema original.
+
+En el caso de ambientes virtuales, podríamos tener un proyecto con muchos paquetes y librerías, pero no necesitamos todos los paquetes y librerías para trabajar en el proyecto. Podríamos dividir el proyecto en subproyectos (por ejemplo, Externos, Modelo y Comunicación) y crear un ambiente virtual para cada subproyecto.
+
+Así en nuestra carpeta del proyecto se tendrán, por ejemplo, tres archivos `environment.yml` con los paquetes y librerías necesarios para cada subproyecto.
+
+Existen herramientas como Snakemake que permiten dividir un proyecto en subproyectos y gestionar los ambientes virtuales de cada subproyecto.
